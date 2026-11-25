@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Aja M-9, the robot Cane Corso · Amaete Teardowns</title>
+<meta name="description" content="A robot Cane Corso you can take apart while it stands: camera eyes, geared ears, paws, the spine, the battery in its flank, then every part at once. Watch it walk and run.">
+<link rel="icon" href="./favicon.svg">
+<link rel="canonical" href="https://corso.amaete.com/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Amaete Teardowns">
+<meta property="og:url" content="https://corso.amaete.com/">
+<meta property="og:title" content="The Robot Cane Corso, Inside Out">
+<meta property="og:description" content="A robot Cane Corso you can take apart while it stands: camera eyes, geared ears, paws, the spine, the battery in its flank, then every part at once. Watch it walk and run.">
+<meta property="og:image" content="https://corso.amaete.com/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Aja M-9, an ivory and copper robot Cane Corso, walking">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Robot Cane Corso, Inside Out">
+<meta name="twitter:description" content="A robot Cane Corso you can take apart while it stands: camera eyes, geared ears, paws, the spine, the battery in its flank, then every part at once. Watch it walk and run.">
+<meta name="twitter:image" content="https://corso.amaete.com/og.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three/three.module.min.js", "three/addons/": "./vendor/three/addons/" } }
+</script>
+<style>
+:root{--ink:#24201c;--ink2:#6f665d;--ink3:#a69c91;--acc:#d4583f;--card:rgba(255,253,250,.82);--line:rgba(60,40,30,.09);
+  --sans:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;overflow:hidden;background:#efe8de;color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+body{background:radial-gradient(120% 90% at 50% 38%,#f6f1ea 0%,#efe7dc 55%,#e7ddcf 100%)}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(60% 40% at 92% 0%,rgba(230,120,90,.12),transparent 70%)}
+#decor{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+#decor *{fill:none;stroke:#8b7766;stroke-opacity:.22;stroke-width:1}
+#decor .dash{stroke-dasharray:3 6}
+#decor circle.dot{fill:#8b7766;fill-opacity:.35;stroke:none}
+#gl{position:fixed;inset:0;width:100%;height:100%;z-index:1;touch-action:none;outline:none}
+.ui{position:fixed;z-index:3}
+/* top */
+.brand{left:24px;top:20px;display:flex;align-items:center;gap:10px;font-weight:800;font-size:17px;letter-spacing:.02em;text-decoration:none;color:var(--ink)}
+.brand svg{width:28px;height:28px;border-radius:7px;background:var(--acc);padding:5px;color:#fff}
+.live{right:24px;top:22px;display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:6px 12px 6px 10px;font-size:12px;font-weight:600;backdrop-filter:blur(6px)}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--acc);animation:pulse 1.6s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.head{left:50%;top:26px;transform:translateX(-50%);text-align:center;pointer-events:none;width:min(720px,92vw)}
+.head .model{font-weight:800;font-size:16px;letter-spacing:.06em}
+.head .model em{font-style:normal;color:var(--acc)}
+.head h1{margin:4px 0 6px;font-weight:800;font-size:clamp(22px,2.6vw,34px);letter-spacing:-.02em;line-height:1.1}
+.head .rule{width:68px;height:3px;border-radius:3px;margin:0 auto 8px;background:linear-gradient(90deg,transparent,var(--acc),transparent)}
+.head .by{font-size:12px;color:var(--ink2)}
+#chips{left:50%;top:150px;transform:translateX(-50%);display:flex;gap:8px;flex-wrap:nowrap;max-width:96vw;overflow-x:auto;scrollbar-width:none;padding:4px}
+#chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:flex;align-items:center;gap:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px 7px 9px;font:600 12.5px var(--sans);cursor:pointer;backdrop-filter:blur(6px);transition:border-color .2s,color .2s,box-shadow .2s}
+.chip i{width:14px;height:14px;border-radius:50%;border:1.5px solid var(--ink3);position:relative}
+.chip i::after{content:"";position:absolute;left:4.5px;top:3px;border:3px solid transparent;border-left:4px solid var(--ink3)}
+.chip:hover{border-color:rgba(212,88,63,.5)}
+.chip.on{border-color:var(--acc);color:var(--acc);box-shadow:0 0 0 3px rgba(212,88,63,.12)}
+.chip.on i{border-color:var(--acc)}.chip.on i::after{border-left-color:var(--acc)}
+#tour{flex:none;border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:999px;padding:7px 14px;font:700 12.5px var(--sans);cursor:pointer}
+#tour.on{background:transparent;color:var(--acc)}
+/* left list */
+#list{left:44px;top:calc(50% - 150px);list-style:none;margin:0;padding:0 0 0 14px;width:200px}
+#list li{position:relative;margin:0 0 9px}
+#list li button{all:unset;cursor:pointer;font-size:14px;color:var(--ink3);font-weight:500;transition:color .2s}
+#list li .sub{display:none;padding:6px 0 2px 12px;font-size:12px;color:var(--ink2);line-height:1.6}
+#list li .sub span{display:block}
+#list li.on button{color:var(--ink);font-weight:700}
+#list li.on .sub{display:block}
+#list li.on::before{content:"";position:absolute;left:-14px;top:2px;width:3px;height:16px;border-radius:2px;background:var(--ink)}
+/* right cards */
+#cards{right:40px;top:calc(50% - 170px);width:250px;display:flex;flex-direction:column;gap:10px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px 13px;backdrop-filter:blur(8px);box-shadow:0 6px 22px rgba(80,50,30,.06)}
+.card .k{font-size:10px;font-weight:700;letter-spacing:.12em;color:var(--ink2)}
+.card .v{font-size:26px;font-weight:800;letter-spacing:-.02em;margin-top:2px}
+.card .v small{font-size:12px;font-weight:600;color:var(--ink2);margin-left:3px}
+.card canvas{display:block;width:100%;height:30px;margin-top:4px}
+.bar{height:4px;border-radius:3px;background:rgba(60,40,30,.08);margin-top:7px;overflow:hidden}
+.bar b{display:block;height:100%;background:var(--acc);border-radius:3px;width:0;transition:width .15s}
+#loadBars{display:flex;align-items:flex-end;gap:3px;height:26px;margin-top:8px}
+#loadBars i{flex:1;background:rgba(212,88,63,.55);border-radius:2px;height:10%;transition:height .12s}
+#loadBars i.hot{background:var(--acc)}
+.note{font-size:10.5px;line-height:1.45;color:var(--ink3);padding:0 4px}
+/* bottom */
+#bottom{left:50%;bottom:22px;transform:translateX(-50%);width:min(1240px,calc(100vw - 48px));display:flex;align-items:center;gap:16px}
+.pill{flex:none;display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:13px;font-weight:600;color:#a7432f;backdrop-filter:blur(6px);white-space:nowrap}
+.pill i{width:7px;height:7px;border-radius:50%;background:var(--acc)}
+.track{flex:1;height:3px;border-radius:3px;background:rgba(60,40,30,.12);overflow:hidden}
+.track b{display:block;height:100%;background:var(--acc);width:0}
+#clock{flex:none;font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums}
+/* callouts */
+#lines{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+#lines path{stroke:#4d4038;stroke-width:1;fill:none;transition:opacity .3s}
+#lines circle{fill:#fff;stroke:#4d4038;stroke-width:1.2;transition:opacity .3s}
+#callouts{position:fixed;inset:0;z-index:3;pointer-events:none}
+.callout{position:absolute;left:0;top:0;background:rgba(255,253,250,.94);border:1px solid var(--line);border-radius:10px;padding:8px 12px;box-shadow:0 6px 20px rgba(60,40,30,.1);opacity:0;transition:opacity .3s;white-space:nowrap}
+.callout.on{opacity:1}
+.callout b{display:block;font-size:13px}
+.callout span{display:block;font-size:11.5px;color:var(--ink2);margin-top:1px}
+.parts{position:fixed;z-index:3;right:40px;bottom:70px;font-size:11px;color:var(--ink3)}
+/* phones */
+@media (max-width:900px),(max-height:520px){
+  #list{display:none}
+  .brand{left:14px;top:12px;font-size:14px}.brand svg{width:24px;height:24px;padding:4px}
+  .live{right:12px;top:12px;font-size:11px;padding:4px 10px 4px 8px}
+  .head{top:46px}.head .model{font-size:12px}.head h1{font-size:20px;margin:2px 0 4px}.head .rule{margin-bottom:0}.head .by{display:none}
+  #chips{top:112px;left:0;transform:none;max-width:100vw;padding:4px 12px}
+  .chip{padding:6px 11px 6px 8px;font-size:12px}
+  #cards{left:10px;right:10px;top:auto;bottom:60px;width:auto;flex-direction:row;gap:6px}
+  .card{flex:1;padding:7px 8px 8px;border-radius:10px;min-width:0}
+  .card .k{font-size:8.5px;letter-spacing:.06em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .card .v{font-size:17px}.card .v small{font-size:10px}
+  .card canvas{height:18px}#loadBars{height:18px;gap:2px}
+  .note,.parts{display:none}
+  #bottom{bottom:14px;width:calc(100vw - 20px);gap:10px}
+  .pill{font-size:11.5px;padding:6px 11px}
+  #clock{font-size:11px}
+}
+@media (max-height:520px) and (min-aspect-ratio:13/10){
+  .head{top:8px;left:auto;right:12px;transform:none;width:auto;text-align:right}.head .model,.head .rule,.head .by{display:none}.head h1{font-size:15px}
+  .live{display:none}
+  #chips{top:44px;left:auto;right:0;width:40vw;flex-wrap:wrap;justify-content:flex-end}
+  .chip{padding:5px 9px 5px 7px;font-size:11px}
+  #cards{left:auto;right:10px;bottom:52px;width:40vw;flex-wrap:wrap}
+  .card{flex:1 1 45%}
+  #bottom{bottom:10px}
+}
+@media (prefers-reduced-motion:reduce){.live i{animation:none}}
+</style>
+</head>
+<body>
+<svg id="decor" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <circle cx="800" cy="520" r="430"/><circle class="dash" cx="800" cy="520" r="540"/>
+  <path d="M-50 760 C 400 620, 900 300, 1650 180"/><path class="dash" d="M-50 300 C 500 420, 1100 900, 1650 820"/>
+  <path d="M1180 -20 C 1240 300, 1320 600, 1500 1020"/>
+  <circle class="dot" cx="1176" cy="282" r="4"/><circle class="dot" cx="372" cy="676" r="4"/><circle class="dot" cx="1262" cy="845" r="3"/>
+</svg>
+<canvas id="gl" aria-label="A robot Cane Corso in 3D. Drag to turn it."></canvas>
+<svg id="lines"></svg>
+<div id="callouts"></div>
+
+<a class="ui brand" href="./"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2.4"/><path d="M12 9.6 10.4 4.2M14.3 12.6l5.3 2.2M10.3 13.8 6.4 18.2"/></svg>Teardowns</a>
+<div class="ui live"><i></i>Live sim</div>
+<div class="ui head">
+  <div class="model">AJA <em>M-9</em></div>
+  <h1>The Robot Cane Corso, Inside Out</h1>
+  <div class="rule"></div>
+  <div class="by">Amaete Teardowns · modelled from four drawings</div>
+</div>
+<div class="ui" id="chips"><button id="tour">▶ Tour</button></div>
+<ul class="ui" id="list"></ul>
+<div class="ui" id="cards">
+  <div class="card"><div class="k">STRIDE</div><div class="v"><span id="vHz">0.0</span><small>Hz</small></div><canvas id="strideCv"></canvas></div>
+  <div class="card"><div class="k">FORCE ON PAWS</div><div class="v"><span id="vF">451</span><small>N</small></div><div class="bar"><b id="bF"></b></div></div>
+  <div class="card"><div class="k">JOINT LOAD</div><div id="loadBars"></div></div>
+  <div class="card"><div class="k">BATTERY</div><div class="v"><span id="vB">92</span><small>%</small></div><div class="bar"><b id="bB"></b></div></div>
+  <div class="note">Concept model. Aja does not exist; every number on this page comes from its simulation.</div>
+</div>
+<div class="ui parts"><span id="count">0</span> parts</div>
+<div class="ui" id="bottom"><div class="pill"><i></i><span id="status">Walking</span></div><div class="track"><b id="prog"></b></div><div id="clock">00:00.0</div></div>
+<script type="module" src="./main.js"></script>
+</body>
+</html>
